@@ -1,40 +1,23 @@
-# HackDome WordPress Theme
+# 🚀 HackDome WordPress Theme  
 
-## 📌 Overview
-HackDome is a custom WordPress theme designed for cybersecurity enthusiasts, providing a Capture The Flag (CTF) environment with real-time challenges, leaderboards, and multiplayer boxes. This theme integrates 2FA authentication, user profiles, progress tracking, and a seamless user experience for both individual and team-based challenges.
-
----
-## 📦 Features
-- **Custom Login & Registration System** (Styled Terminal UI)
-- **2FA Authentication** (via miniOrange)
-- **Challenges System** (Box-based multiplayer challenges)
-- **Live Leaderboard** (Real-time scoring & ranking)
-- **User Profiles** (Custom avatars, badges, progress tracking)
-- **Subscription Plans** (Integrated with Stripe)
-- **Matrix Rain Background** (Cyberpunk-inspired UI)
+**HackDome** is a custom WordPress theme designed for **Capture The Flag (CTF) competitions**, providing a **secure, modern, and responsive** experience for players and administrators.  
 
 ---
 
-## 🚀 Installation
+## 📌 Features  
+✅ **Custom Theme Design** – Fully responsive, dark-mode UI optimized for security-based competitions.  
+✅ **Leaderboard & User Profiles** – Displays top players dynamically.  
+✅ **CTF Challenges Integration** – Easily add, edit, and manage challenges.  
+✅ **Security-Focused** – Hardened against common WordPress vulnerabilities.  
+✅ **Optimized Performance** – Lightweight theme with fast loading times.  
+✅ **Custom Widgets & Shortcodes** – Easily integrate into CTF-related content.  
 
-### 1️⃣ Prerequisites
-Ensure you have:
-- **WordPress Installed** (Latest Version)
-- **PHP 7.4+**
-- **MySQL 5.7+**
-- **A Web Server (Apache/Nginx)**
-
-### 2️⃣ Clone the Repository
-```bash
-git clone https://github.com/yourusername/hackdome-theme.git
-```
-
-### 3️⃣ Upload the Theme
-- Navigate to your WordPress **Admin Panel** → Appearance → Themes.
-- Click **Add New** → **Upload Theme.**
-- Upload the hackdome-theme.zip and activate it.
 ---
-## **📌 Folder Structure**
+
+## 🛠️ Workflow Structure  
+
+### **1️⃣ Theme Setup**  
+The **HackDome Theme** is structured as follows:  
 ```
 HackDome-Theme/
 │── assets/               # Theme assets (CSS, JS, Images)
@@ -46,20 +29,65 @@ HackDome-Theme/
 │── leaderboard.php       # Custom leaderboard template
 │── README.md             # Documentation
 ```
----
-## 🎯 Roadmap & Future Features
-- Live Multiplayer CTF Challenges
-- Custom User Dashboard with Performance Stats
-- Discord & Slack Integration
-- AI-Generated Hints for Challenges
----
-## **📌 Author**
-👨‍💻 **Bishesh Dulal**  
-🔗 [GitHub](https://github.com/bisesdulal16)  
-📧 [Email](mailto:bisesdulal16@gmail.com)
 
 ---
 
-## **📌 License**
-📝 **MIT License**  
-Feel free to use, modify, and distribute this project!
+## 📥 Installation  
+
+### **1️⃣ Prerequisites**  
+🔹 WordPress **5.8+** (Recommended)  
+🔹 PHP **7.4+**  
+🔹 MySQL **5.7+**  
+
+### **2️⃣ Upload & Activate Theme**  
+1. **Download the Theme**: Clone or download the theme from GitHub.  
+2. **Upload to WordPress**:  
+   - Go to `Appearance > Themes > Add New > Upload Theme`  
+   - Upload the `HackDome-Theme.zip` file  
+   - Click **Activate**  
+
+### **3️⃣ Install Required Plugins**  
+To get full functionality, install the following **free plugins**:  
+
+✅ **CTFd Integration Plugin** – *(Optional: For integrating with CTFd API)*  
+✅ **Advanced Custom Fields (ACF)** – *(For custom fields in challenges & leaderboard)*  
+✅ **WPForms** – *(For secure user registration & contact forms)*  
+✅ **WP Super Cache** – *(Performance optimization)*  
+✅ **Wordfence Security** – *(Harden WordPress security settings)*  
+✅ **All-in-One WP Migration** – *(Easily migrate content from local to live server)*  
+
+### **4️⃣ Configure Theme Settings**  
+1. **Go to `Appearance > Customize`**  
+2. Adjust theme colors, fonts, and layout.  
+3. Set **Home Page** under `Settings > Reading`.  
+4. Customize widgets under `Appearance > Widgets`.  
+
+---
+
+## 🚀 Next Steps  
+
+📌 **Enhancements:**  
+- Add **JWT Authentication** for better security.  
+- Implement **real-time challenge updates**.  
+- Create a **REST API for challenge submissions**.  
+
+📌 **Deployment:**  
+- Host on **DigitalOcean, AWS, or VPS**.  
+- Configure **SSL/TLS for HTTPS security**.  
+- Enable **Cloudflare WAF & DDoS Protection**.  
+
+📌 **Contributing:**  
+1. **Fork the repository**.  
+2. **Create a feature branch**: `git checkout -b feature-new`  
+3. **Commit your changes**: `git commit -m "Added feature X"`  
+4. **Push the branch**: `git push origin feature-new`  
+5. **Submit a Pull Request**.  
+
+---
+
+## 📌 Support  
+👨‍💻 Developed by **Bishesh Dulal**  
+🔗 **GitHub:** [github.com/bisheshd](https://github.com/bisesdulal16)  
+📧 **Email:** [bisesdulal16@gmail.com](mailto:bisesdulal16@gmail.com)  
+
+📜 **License:** MIT License – Free to modify and distribute.  
