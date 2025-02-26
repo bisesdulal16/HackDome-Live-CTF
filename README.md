@@ -1,16 +1,18 @@
 # 🚀 HackDome WordPress Theme  
 
-**HackDome** is a custom WordPress theme designed for **Capture The Flag (CTF) competitions**, providing a **secure, modern, and responsive** experience for players and administrators.  
+HackDome is a **cybersecurity-focused** WordPress theme designed for **CTF (Capture The Flag) challenges**, **leaderboards**, and **live user progress tracking**. It provides a futuristic, hacker-themed UI with features like **dynamic user profiles, real-time progress tracking, and a built-in challenge system**.  
 
 ---
 
-## 📌 Features  
-✅ **Custom Theme Design** – Fully responsive, dark-mode UI optimized for security-based competitions.  
-✅ **Leaderboard & User Profiles** – Displays top players dynamically.  
-✅ **CTF Challenges Integration** – Easily add, edit, and manage challenges.  
-✅ **Security-Focused** – Hardened against common WordPress vulnerabilities.  
-✅ **Optimized Performance** – Lightweight theme with fast loading times.  
-✅ **Custom Widgets & Shortcodes** – Easily integrate into CTF-related content.  
+## 📌 Features
+✅ **Custom Login & Registration System**  
+✅ **2FA Authentication (miniOrange Plugin Integration)**  
+✅ **CTF Challenges (WP Pro Quiz & Custom Integration)**  
+✅ **Leaderboard System (MyCred + Custom Badges)**  
+✅ **Live User Progress Tracking**  
+✅ **Real-Time Stats & Scoreboard**  
+✅ **Fully Responsive, Cyberpunk UI**  
+✅ **Matrix-Themed Animations**   
 
 ---
 
