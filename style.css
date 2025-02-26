@@ -1,0 +1,438 @@
+/*
+Theme Name: HackDome
+Theme URI: https://github.com/bisesdulal16/hackdome-theme
+Author: Bishesh Dulal
+Author URI: https://github.com/bisesdulal16
+Description: A Capture The Flag (CTF) WordPress Theme for Cybersecurity Competitions.
+Version: 1.0
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: hackdome
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* Minor overrides or theme-specific tweaks can go here */
+
+/* ✅ Button Hover Effect */
+.btn-primary:hover {
+    background-color: #e75e8d; /* Match theme color */
+    border-color: #e75e8d;
+    color: #fff;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+/* ✅ Custom 404 Page Glitch Text */
+.glitch-text {
+    color: #ff004f;
+    animation: glitch 1.5s infinite;
+}
+
+/* ✅ Register Form Input Fields */
+.register-form input[type="text"],
+.register-form input[type="email"],
+.register-form input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    border: 1px solid #444;
+    background-color: #1f1f1f;
+    color: #fff;
+    font-size: 1rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* ✅ Input Focus State */
+.register-form input[type="text"]:focus,
+.register-form input[type="email"]:focus,
+.register-form input[type="password"]:focus {
+    border-color: #e75e8d;
+    box-shadow: 0 0 5px rgba(231, 94, 141, 0.5);
+    outline: none;
+}
+
+/* ✅ Register Button */
+.register-form .main-button-login {
+    width: 100%;
+    background-color: #e75e8d;
+    color: #fff;
+    border: none;
+    padding: 14px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: background-color 0.3s ease;
+}
+
+/* ✅ Button Hover */
+.register-form .main-button-login:hover {
+    background-color: #d14f7c;
+}
+
+/* ✅ Success Message */
+.terminal-text.success {
+    color: #00cc66;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* ✅ Error Message */
+.terminal-text.error {
+    color: #ff4444;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+
+/* Payment Page Styling */
+.payment-section {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #27292a;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.payment-section .stripe-button-el {
+    background-color: #e75e8d !important;
+    color: #fff !important;
+    border: none !important;
+    border-radius: 5px !important;
+    padding: 12px 25px !important;
+    font-size: 16px !important;
+    cursor: pointer !important;
+}
+
+.payment-section .stripe-button-el:hover {
+    background-color: #d4517b !important;
+}
+
+.payment-section h3 {
+    color: #fff;
+}
+
+.terminal-text.success {
+    color: #4CAF50;
+    font-weight: bold;
+}
+
+.terminal-text.error {
+    color: #FF5252;
+    font-weight: bold;
+}
+
+/* ✅ Password Container */
+.password-container {
+    position: relative;
+    width: 100%;
+}
+
+/* ✅ Password Input */
+.password-container input[type="password"],
+.password-container input[type="text"] {
+    width: 100%;
+    padding: 12px;
+    padding-right: 40px; /* Space for the eye icon */
+    border-radius: 5px;
+    border: 1px solid #444;
+    background-color: #1f1f1f;
+    color: #fff;
+    font-size: 1rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* ✅ Eye Icon */
+.toggle-password {
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #888;
+    font-size: 1.2rem;
+    transition: color 0.3s ease;
+}
+
+.toggle-password:hover {
+    color: #e75e8d;
+}
+
+/* ====== 2FA Login Field ====== */
+.terminal-body input[type="text"],
+.terminal-body input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    border-radius: 5px;
+    border: 1px solid #e75e8d;
+    background-color: #1f1f1f;
+    color: #fff;
+    margin-bottom: 15px;
+}
+
+.terminal-body input[type="text"]:focus,
+.terminal-body input[type="password"]:focus {
+    border-color: #ec6090;
+    box-shadow: 0 0 5px rgba(236, 96, 144, 0.5);
+    outline: none;
+}
+
+/* ====== 2FA Success & Error Messages ====== */
+.terminal-text.success {
+    color: #28a745;
+    font-weight: bold;
+    background-color: rgba(40, 167, 69, 0.1);
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.terminal-text.error {
+    color: #dc3545;
+    font-weight: bold;
+    background-color: rgba(220, 53, 69, 0.1);
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.password-container {
+    position: relative;
+}
+
+.show-password {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #e75e8d;
+    font-size: 1.2rem;
+}
+
+/* MFA Form Styling */
+.mfa-form input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.mfa-form button {
+    width: 100%;
+    margin-top: 10px;
+    background-color: #e75e8d;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+}
+
+.mfa-form button:hover {
+    background-color: #d14f7c;
+}
+
+.cart-buttons {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.cart-buttons a {
+    margin: 0 10px;
+}
+
+/* ============================= */
+/* miniOrange 2FA Popup Styling  */
+/* ============================= */
+
+/* Popup Container */
+#mo2f_modal, .mo2f-popup, .mo2f-modal-content {
+    background-color: #0b0f19 !important; /* Dark Background */
+    border-radius: 10px !important;
+    border: 2px solid #ec6090 !important; /* Glowing Pink Border */
+    color: #fff !important;
+    box-shadow: 0 0 20px rgba(236, 96, 144, 0.5);
+    width: 400px !important;
+    max-width: 90%;
+    padding: 20px;
+}
+
+/* Popup Header */
+.mo2f-modal-header {
+    background-color: #1e242c !important;
+    border-bottom: 2px solid #ec6090;
+    text-align: center;
+    color: #ec6090 !important;
+    font-size: 1.5rem;
+    padding: 15px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+/* Close Button */
+.mo2f-close {
+    color: #fff !important;
+    font-size: 1.4rem;
+    right: 10px;
+    top: 5px;
+    cursor: pointer;
+}
+
+.mo2f-close:hover {
+    color: #ec6090 !important;
+}
+
+/* QR Code Styling */
+.mo2f-qr-code img {
+    border: 2px solid #ec6090;
+    border-radius: 5px;
+    padding: 5px;
+    display: block;
+    margin: 10px auto;
+}
+
+/* Input Fields */
+.mo2f-input, .mo2f-otp-field input[type="text"] {
+    width: 100% !important;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #1e242c !important;
+    border: 1px solid #444 !important;
+    color: #fff !important;
+    margin: 10px 0;
+}
+
+/* Focus Effect */
+.mo2f-input:focus, .mo2f-otp-field input[type="text"]:focus {
+    border-color: #ec6090 !important;
+    box-shadow: 0 0 5px rgba(236, 96, 144, 0.7);
+    outline: none;
+}
+
+/* Submit Button */
+.mo2f-submit-btn, .mo2f-verify-btn {
+    background-color: #ec6090 !important;
+    border: none;
+    color: #fff !important;
+    padding: 12px;
+    border-radius: 5px;
+    width: 100%;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.mo2f-submit-btn:hover, .mo2f-verify-btn:hover {
+    background-color: #d14b77 !important;
+}
+
+/* Error & Success Messages */
+.mo2f-error, .mo2f-success {
+    padding: 12px;
+    border-radius: 5px;
+    margin-top: 10px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.mo2f-error {
+    background-color: #dc3545 !important;
+    color: #fff !important;
+}
+
+.mo2f-success {
+    background-color: #28a745 !important;
+    color: #fff !important;
+}
+
+/* Responsive Popup */
+@media (max-width: 768px) {
+    #mo2f_modal, .mo2f-popup {
+        width: 90% !important;
+    }
+}
+
+/* =============================== */
+/* Stripe Payment Form - Custom UI */
+/* =============================== */
+
+/* Payment Section Container */
+.payment-section {
+    text-align: center;
+    margin: 20px auto;
+}
+
+/* Stripe Payment Button */
+.custom-stripe-button input[type="submit"] {
+    background-color: #ec6090; /* Pink theme color */
+    border: none;
+    color: #fff;
+    padding: 15px 25px;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    width: 100%;
+    max-width: 300px;
+}
+
+.custom-stripe-button input[type="submit"]:hover {
+    background-color: #d14b77;
+    box-shadow: 0 0 15px rgba(236, 96, 144, 0.7);
+}
+
+/* Stripe Form Fields */
+.wpsp-stripe-checkout-form input[type="text"],
+.wpsp-stripe-checkout-form input[type="email"],
+.wpsp-stripe-checkout-form input[type="tel"] {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: 1px solid #444;
+    background-color: #1e242c;
+    color: #fff;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.wpsp-stripe-checkout-form input:focus {
+    border-color: #ec6090;
+    box-shadow: 0 0 5px rgba(236, 96, 144, 0.5);
+}
+
+/* Stripe Form Labels */
+.wpsp-stripe-checkout-form label {
+    color: #fff;
+    font-weight: 600;
+}
+
+/* Payment Success Message */
+.payment-success .terminal-text.success {
+    background-color: #28a745;
+    color: #fff;
+    padding: 15px;
+    border-radius: 5px;
+    margin: 20px auto;
+    text-align: center;
+}
+
+/* Payment Failure Message */
+.payment-error .terminal-text.error {
+    background-color: #dc3545;
+    color: #fff;
+    padding: 15px;
+    border-radius: 5px;
+    margin: 20px auto;
+    text-align: center;
+}
+
+/* Responsive Payment Form */
+@media (max-width: 768px) {
+    .custom-stripe-button input[type="submit"] {
+        width: 100%;
+        font-size: 1rem;
+    }
+}

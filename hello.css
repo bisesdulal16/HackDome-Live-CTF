@@ -1,0 +1,205 @@
+/* ============================= */
+/* Contact Form Section - Dark Theme */
+/* ============================= */
+
+.contact-us {
+    background: #0b0f19;
+    text-align: center;
+    border-radius: 23px;
+    padding: 30px;
+    margin: 30px auto;
+    max-width: 500px;
+  }
+  
+  .contact-us .heading-section h4 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: #ec6090;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+  }
+  
+  .contact-us p {
+    color: #ccc;
+    margin-bottom: 20px;
+  }
+  
+  /* Center the form */
+  .contact-us form {
+    max-width: 100%;
+    margin: 0 auto;
+  }
+  
+  /* Form Fields */
+  .contact-us input[type="text"],
+  .contact-us input[type="email"],
+  .contact-us textarea,
+  .wpforms-field input[type="text"],
+  .wpforms-field input[type="email"],
+  .wpforms-field textarea {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: 1px solid #444;
+    background: #1e242c !important; /* ✅ Dark background */
+    color: #fff !important; /* ✅ White text */
+    font-size: 1rem;
+    transition: all 0.3s ease;
+  }
+  
+  /* Darker Textarea */
+  .contact-us textarea,
+  .wpforms-field textarea {
+    height: 150px;
+    resize: none;
+    background-color: #1a1f27 !important; /* ✅ Force darker background */
+    color: #fff !important;
+    border: 1px solid #444;
+  }
+  
+  /* Focus effect */
+  .contact-us input[type="text"]:focus,
+  .contact-us input[type="email"]:focus,
+  .contact-us textarea:focus,
+  .wpforms-field input[type="text"]:focus,
+  .wpforms-field input[type="email"]:focus,
+  .wpforms-field textarea:focus {
+    border-color: #ec6090;
+    box-shadow: 0 0 5px rgba(236, 96, 144, 0.5);
+    outline: none;
+  }
+  
+  /* Placeholder Styling */
+  .contact-us input::placeholder,
+  .contact-us textarea::placeholder,
+  .wpforms-field input::placeholder,
+  .wpforms-field textarea::placeholder {
+    color: #888;
+  }
+  
+  /* Labels */
+  .contact-us label,
+  .wpforms-field-label {
+    color: #fff !important;
+    font-weight: 600;
+    margin-top: 10px;
+    display: block;
+    text-align: left;
+  }
+  
+  /* Highlight Required Fields */
+  .wpforms-required-label {
+    color: #ec6090 !important;
+  }
+  
+  /* Submit Button */
+  .contact-us .wpforms-submit {
+    display: inline-block;
+    background: #ec6090;
+    padding: 12px 20px;
+    color: #fff;
+    font-weight: 600;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background 0.3s, color 0.3s;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+  }
+  
+  .contact-us .wpforms-submit:hover {
+    background: #d14b77;
+    color: #fff;
+  }
+  
+  /* Success & Error Messages */
+  .wpforms-confirmation-container,
+  .success-message {
+    background-color: #28a745;
+    color: #fff;
+    padding: 15px;
+    border-radius: 5px;
+    margin-top: 20px;
+    font-weight: 600;
+  }
+  
+  .wpforms-error-container,
+  .error-message {
+    background-color: #dc3545;
+    color: #fff;
+    padding: 15px;
+    border-radius: 5px;
+    margin-top: 20px;
+    font-weight: 600;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .contact-us {
+      padding: 20px;
+    }
+  
+    .contact-us input,
+    .contact-us textarea {
+      font-size: 14px;
+    }
+  
+    .contact-us .wpforms-submit {
+      width: 100%;
+    }
+  }
+  
+  /* Match Submit Button Hover to Theme Color */
+  .contact-us .wpforms-submit {
+      background-color: #007bff; /* Default color for submit button */
+      color: #fff;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+  }
+  
+  /* Hover Effect - Matches Theme Color */
+  .contact-us .wpforms-submit:hover {
+      background-color: #d14b77; /* Pinkish theme color */
+      color: #fff;
+      box-shadow: none; /* Removes glow if present */
+  }
+  /* Submit Button - Default Style */
+  .contact-us .wpforms-submit {
+      background-color: #007bff; /* Default color */
+      color: #fff;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  /* Submit Button - Hover Effect */
+  .contact-us .wpforms-submit:hover {
+      background-color: #ec6090; /* Theme color on hover */
+      color: #fff;
+      cursor: pointer; /* Ensures pointer appears */
+      box-shadow: 0 0 10px rgba(236, 96, 144, 0.6); /* Optional subtle glow */
+      pointer-events: auto; /* Keeps button active */
+  }
+  
+  /* Disabled State (if applied by WPForms) */
+  .contact-us .wpforms-submit:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+      opacity: 0.7;
+  }
+  
+  /* Disabled State - Hover Fix */
+  .contact-us .wpforms-submit:disabled:hover {
+      background-color: #ccc;
+      box-shadow: none;
+      cursor: not-allowed;
+  }
+  
+  
