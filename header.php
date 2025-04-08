@@ -34,7 +34,8 @@
                     <ul class="nav">
                         <?php if (is_user_logged_in()) : ?>
                             <!-- Navbar for Logged-in Users -->
-                            <li><a href="<?php echo esc_url(home_url('/index')); ?>" class="<?php echo is_page('index') ? 'active' : ''; ?>">Home</a></li>
+                             <!-- change to /index if not workin -->
+                            <li><a href="<?php echo esc_url(home_url('/')); ?>" class="<?php echo is_page('index') ? 'active' : ''; ?>">Home</a></li>
                             <li><a href="<?php echo esc_url(home_url('/challenges')); ?>" class="<?php echo is_page('challenges') ? 'active' : ''; ?>">Challenges</a></li>
                             <li><a href="<?php echo esc_url(home_url('/leaderboard')); ?>" class="<?php echo is_page('leaderboard') ? 'active' : ''; ?>">Leaderboard</a></li>
                             <li><a href="<?php echo esc_url(home_url('/profile')); ?>" class="<?php echo is_page('profile') ? 'active' : ''; ?>">Profile</a></li>

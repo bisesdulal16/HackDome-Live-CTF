@@ -17,34 +17,59 @@ get_header();
                             </div>
                             <div class="owl-features owl-carousel">
                                 <?php
-                                // Dummy data for featured CTFs (replace with dynamic data from DB if needed)
-                                $featured_ctfs = [
-                                    ['image' => 'redvsblue.webp', 'title' => 'Red Team vs Blue Team', 'desc' => 'Attack & Defend in a real-time simulation.', 'players' => '10/20', 'difficulty' => 'Hard', 'rating' => '4.8/5', 'plays' => '3.5K'],
-                                    ['image' => 'accesdenied.webp', 'title' => 'Web Exploitation Showdown', 'desc' => 'Find and exploit vulnerabilities.', 'players' => '8/15', 'difficulty' => 'Medium', 'rating' => '4.6/5', 'plays' => '2.1K'],
-                                    ['image' => 'forensics.webp', 'title' => 'Forensics Deep Dive', 'desc' => 'Analyze logs and recover hidden data.', 'players' => '5/10', 'difficulty' => 'Hard', 'rating' => '4.7/5', 'plays' => '1.8K'],
-                                ];
-
-                                foreach ($featured_ctfs as $ctf) :
+                                $featured_args = array(
+                                    'post_type'      => 'ctf_challenge',
+                                    'posts_per_page' => 6,
+                                    'meta_query'     => array(
+                                        array(
+                                            'key'     => 'is_featured',
+                                            'value'   => '1',
+                                            'compare' => '='
+                                        )
+                                    )
+                                );
+                                $featured_query = new WP_Query($featured_args);
+                                if ($featured_query->have_posts()) :
+                                    while ($featured_query->have_posts()) : $featured_query->the_post();
+                                        $desc      = get_field('short_description');
+                                        $players   = get_field('players_allowed');
+                                        $difficulty = get_field('difficulty');
+                                        $rating     = get_field('rating');
+                                        $plays      = get_field('play_count');
                                 ?>
-                                    <div class="item">
-                                        <div class="thumb">
-                                            <img src="<?php echo get_template_directory_uri(); ?>/assets/images/<?php echo esc_html($ctf['image']); ?>" alt="">
-                                            <div class="hover-effect">
-                                                <h6>Join Box</h6>
+                                        <div class="item">
+                                            <div class="thumb">
+                                                <?php 
+                                                if (has_post_thumbnail()) {
+                                                    the_post_thumbnail('medium');
+                                                } else {
+                                                    echo '<img src="' . get_template_directory_uri() . '/assets/images/default-box.jpg" alt="CTF Image">';
+                                                }
+                                                ?>
+                                                <div class="hover-effect">
+                                                    <h6><a href="<?php the_permalink(); ?>">Join Box</a></h6>
+                                                </div>
                                             </div>
+                                            <h4><?php the_title(); ?><br><span><?php echo esc_html($desc); ?></span></h4>
+                                            <span class="stats">
+                                                <i class="fa fa-users"></i> Players: <?php echo esc_html($players); ?> <br>
+                                                <i class="fa fa-tachometer-alt"></i> Difficulty: <?php echo esc_html($difficulty); ?> <br>
+                                                <i class="fa fa-star"></i> <?php echo esc_html($rating); ?> <br>
+                                                <i class="fa fa-gamepad"></i> <?php echo esc_html($plays); ?> Times
+                                            </span>
                                         </div>
-                                        <h4><?php echo esc_html($ctf['title']); ?><br><span><?php echo esc_html($ctf['desc']); ?></span></h4>
-                                        <span class="stats">
-                                            <i class="fa fa-users"></i> Players: <?php echo esc_html($ctf['players']); ?> <br>
-                                            <i class="fa fa-tachometer-alt"></i> Difficulty: <?php echo esc_html($ctf['difficulty']); ?> <br>
-                                            <i class="fa fa-star"></i> <?php echo esc_html($ctf['rating']); ?> <br>
-                                            <i class="fa fa-gamepad"></i> <?php echo esc_html($ctf['plays']); ?> Times
-                                        </span>
-                                    </div>
-                                <?php endforeach; ?>
+                                <?php
+                                    endwhile;
+                                    wp_reset_postdata();
+                                else :
+                                    echo "<p class='terminal-text'>No featured challenges available.</p>";
+                                endif;
+                                ?>
                             </div>
                         </div>
                     </div>
+
+
 
                     <!-- ***** CTF Leaderboard ***** -->
                     <div class="col-lg-4">
@@ -100,49 +125,94 @@ get_header();
                         </div>
 
                         <!-- CTF Items -->
-                        <div class="row">
+                        <div class="row" id="ctf-container">
                             <?php
-                            // Dummy ongoing CTFs
-                            $ongoing_ctfs = [
-                                ['image' => 'stream-08.jpg', 'title' => 'OSINT Recon Hunt', 'category' => 'osint', 'players' => '8/15', 'difficulty' => 'Medium', 'rating' => '4.6/5'],
-                                ['image' => 'stream-08.jpg', 'title' => 'Cryptography Decryption War', 'category' => 'crypto', 'players' => '7/14', 'difficulty' => 'Hard', 'rating' => '4.7/5'],
-                                ['image' => 'stream-08.jpg', 'title' => 'Forensics Deep Dive', 'category' => 'forensics', 'players' => '5/10', 'difficulty' => 'Medium', 'rating' => '4.5/5'],
-                            ];
-
-                            foreach ($ongoing_ctfs as $ctf) :
+                            $args = array(
+                                'post_type'      => 'ctf_challenge',
+                                'posts_per_page' => -1,
+                                'meta_query'     => array(
+                                    array(
+                                        'key'     => 'is_ongoing',
+                                        'value'   => '1',
+                                        'compare' => '='
+                                    )
+                                )
+                            );
+                            $ongoing = new WP_Query($args);
+                            if ($ongoing->have_posts()) :
+                                while ($ongoing->have_posts()) : $ongoing->the_post();
+                                    $players    = get_field('players_allowed');
+                                    $difficulty = get_field('difficulty');
+                                    $rating     = get_field('rating');
+                                    $category   = strtolower(get_field('category')); // assumed ACF, change if taxonomy
                             ?>
-                                <div class="col-lg-3 col-sm-6 ctf-item" data-category="<?php echo esc_attr($ctf['category']); ?>">
+                                <div class="col-lg-3 col-sm-6 ctf-item" data-category="<?php echo esc_attr($category); ?>">
                                     <div class="item">
                                         <div class="thumb">
-                                            <img src="<?php echo get_template_directory_uri(); ?>/assets/images/<?php echo esc_html($ctf['image']); ?>" alt="">
+                                            <?php 
+                                            if (has_post_thumbnail()) {
+                                                the_post_thumbnail('medium');
+                                            } else {
+                                                echo '<img src="' . get_template_directory_uri() . '/assets/images/default-box.jpg" alt="CTF">';
+                                            }
+                                            ?>
                                             <div class="hover-effect">
                                                 <div class="content">
                                                     <div class="live"><a href="#">Live</a></div>
                                                     <ul>
-                                                        <li><a href="#"><i class="fa-solid fa-right-to-bracket"></i> Join Box </a></li>
+                                                        <li><a href="<?php the_permalink(); ?>"><i class="fa-solid fa-right-to-bracket"></i> Join Box </a></li>
                                                     </ul>
                                                 </div>
                                             </div>
                                         </div>
-                                        <h4><?php echo esc_html($ctf['title']); ?><br><span>Find and exploit vulnerabilities in a live website.</span></h4>
+                                        <h4><?php the_title(); ?><br><span><?php echo wp_trim_words(get_the_content(), 10); ?></span></h4>
                                         <div class="stats">
                                             <li>
-                                                <i class="fa fa-users"></i> Players: <?php echo esc_html($ctf['players']); ?> <br>
-                                                <i class="fa fa-tachometer-alt"></i> Difficulty: <?php echo esc_html($ctf['difficulty']); ?> <br>
-                                                <i class="fa fa-star"></i> <?php echo esc_html($ctf['rating']); ?>
+                                                <i class="fa fa-users"></i> Players: <?php echo esc_html($players); ?> <br>
+                                                <i class="fa fa-tachometer-alt"></i> Difficulty: <?php echo esc_html($difficulty); ?> <br>
+                                                <i class="fa fa-star"></i> <?php echo esc_html($rating); ?>
                                             </li>
                                         </div>
                                     </div>
                                 </div>
-                            <?php endforeach; ?>
+                            <?php
+                                endwhile;
+                                wp_reset_postdata();
+                            else :
+                                echo '<p class="terminal-text">No live CTFs available at the moment.</p>';
+                            endif;
+                            ?>
                         </div>
-
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
 </div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const buttons = document.querySelectorAll(".filter-btn");
+    const boxes = document.querySelectorAll(".ctf-item");
+
+    buttons.forEach(btn => {
+        btn.addEventListener("click", function () {
+            const category = this.getAttribute("data-category");
+
+            buttons.forEach(b => b.classList.remove("active"));
+            this.classList.add("active");
+
+            boxes.forEach(box => {
+                const boxCat = box.getAttribute("data-category");
+                if (category === "all" || boxCat === category) {
+                    box.style.display = "block";
+                } else {
+                    box.style.display = "none";
+                }
+            });
+        });
+    });
+});
+</script>
 
 <?php get_footer(); ?>
