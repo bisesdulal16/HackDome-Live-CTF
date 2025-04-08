@@ -41,8 +41,8 @@ get_header();
                 </label>
 
                 <button type="submit" name="wp-submit" class="main-button-login">Login</button>
-
-                <p class="forgot-password"><a href="<?php echo wp_lostpassword_url(); ?>">Forgot Password?</a></p>
+            
+                <p class="forgot-password"><a href="<?php echo site_url('/forgot-password'); ?>">Forgot Password?</a></p> 
             </form>
             <?php
         }
