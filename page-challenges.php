@@ -31,11 +31,10 @@ get_header();
                                 $featured_query = new WP_Query($featured_args);
                                 if ($featured_query->have_posts()) :
                                     while ($featured_query->have_posts()) : $featured_query->the_post();
-                                        $desc      = get_field('short_description');
-                                        $players   = get_field('players_allowed');
-                                        $difficulty = get_field('difficulty');
-                                        $rating     = get_field('rating');
-                                        $plays      = get_field('play_count');
+                                        $desc = get_the_excerpt();
+                                        $players    = get_field('players_count') ?: 'N/A';
+                                        $difficulty = get_field('difficulty') ?: 'Unknown';
+                                        $rating     = get_field('rating') ?: '0';
                                 ?>
                                         <div class="item">
                                             <div class="thumb">
@@ -141,10 +140,11 @@ get_header();
                             $ongoing = new WP_Query($args);
                             if ($ongoing->have_posts()) :
                                 while ($ongoing->have_posts()) : $ongoing->the_post();
-                                    $players    = get_field('players_allowed');
-                                    $difficulty = get_field('difficulty');
-                                    $rating     = get_field('rating');
-                                    $category   = strtolower(get_field('category')); // assumed ACF, change if taxonomy
+                                    $desc = get_the_excerpt(); 
+                                    $players    = get_field('players_count') ?: 'N/A';
+                                    $difficulty = get_field('difficulty') ?: 'Unknown';
+                                    $rating     = get_field('rating') ?: '0';
+                                    $category   = strtolower(get_field('category')) ?: 'general'; 
                             ?>
                                 <div class="col-lg-3 col-sm-6 ctf-item" data-category="<?php echo esc_attr($category); ?>">
                                     <div class="item">
@@ -165,7 +165,7 @@ get_header();
                                                 </div>
                                             </div>
                                         </div>
-                                        <h4><?php the_title(); ?><br><span><?php echo wp_trim_words(get_the_content(), 10); ?></span></h4>
+                                        <h4><?php the_title(); ?><br><span><?php echo get_the_excerpt() ?: 'No description available.'; ?></span></h4>
                                         <div class="stats">
                                             <li>
                                                 <i class="fa fa-users"></i> Players: <?php echo esc_html($players); ?> <br>
