@@ -3,7 +3,7 @@
 // HackDome Theme Functions
 // ==============================
 
-// 1️⃣ -- Theme Setup
+//  -- Theme Setup
 function hackdome_theme_setup() {
     add_theme_support('post-thumbnails');
     register_nav_menus(array(
@@ -16,7 +16,7 @@ function hackdome_theme_setup() {
 add_action('after_setup_theme', 'hackdome_theme_setup');
 
 
-// 2️⃣ -- Enqueue CSS & JS Files
+//  -- Enqueue CSS & JS Files
 function hackdome_enqueue_scripts() {
     wp_enqueue_style('google-fonts', 'https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap', array(), null);
     wp_enqueue_style('bootstrap-css', get_template_directory_uri() . '/vendor/bootstrap/css/bootstrap.min.css', array(), '4.5.2');
@@ -37,7 +37,7 @@ function hackdome_enqueue_scripts() {
 add_action('wp_enqueue_scripts', 'hackdome_enqueue_scripts');
 
 
-// 3️⃣ -- Register Custom Post Type: CTF Challenges
+// -- Register Custom Post Type: CTF Challenges
 function hackdome_register_ctf_post_type() {
     $labels = array(
         'name' => __('CTF Challenges', 'hackdome'),
@@ -67,7 +67,7 @@ function hackdome_register_ctf_post_type() {
 add_action('init', 'hackdome_register_ctf_post_type');
 
 
-// 4️⃣ -- Register Widget Areas
+//  -- Register Widget Areas
 function hackdome_register_sidebars() {
     register_sidebar(array(
         'name' => __('Sidebar', 'hackdome'),
@@ -92,14 +92,14 @@ function hackdome_register_sidebars() {
 add_action('widgets_init', 'hackdome_register_sidebars');
 
 
-// 5️⃣ -- Add Custom Excerpt Length
+//  -- Add Custom Excerpt Length
 function hackdome_custom_excerpt_length($length) {
     return 20;
 }
 add_filter('excerpt_length', 'hackdome_custom_excerpt_length');
 
 
-// 6️⃣ -- Enable AJAX for Dynamic CTF Filtering
+//  -- Enable AJAX for Dynamic CTF Filtering
 function hackdome_enqueue_ajax_scripts() {
     wp_localize_script('custom', 'hackdome_ajax', array(
         'ajax_url' => admin_url('admin-ajax.php')
@@ -137,11 +137,11 @@ function hackdome_filter_ctfs() {
     wp_die();
 }
 
-// 7️⃣ -- Disable WordPress Emoji Script
+//  -- Disable WordPress Emoji Script
 remove_action('wp_head', 'print_emoji_detection_script', 7);
 remove_action('wp_print_styles', 'print_emoji_styles');
 
-// 8️⃣ -- Hide WordPress Version Number
+//  -- Hide WordPress Version Number
 remove_action('wp_head', 'wp_generator');
 
 function hackdome_login_redirect($redirect_to, $request, $user) {
@@ -165,7 +165,7 @@ function hackdome_redirect_after_payment($order_id){
     }
 }
 
-// ✅ REST API for Flag Submission
+//  REST API for Flag Submission
 add_action('rest_api_init', function () {
     register_rest_route('hackdome/v1', '/submit-flag', array(
         'methods' => 'POST',
@@ -180,7 +180,11 @@ function hackdome_submit_flag($request) {
     $flag = sanitize_text_field($request->get_param('flag'));
     $user_id = get_current_user_id();
 
-    $correct_flags = array('flag{pwned123}', 'flag{redteam2025}');
+    $correct_flag = get_post_meta($challenge_id, 'challenge_flag', true);
+    if ($flag === $correct_flag) {
+    // award points
+    }
+
 
     if (in_array($flag, $correct_flags)) {
         $current_score = (int) get_user_meta($user_id, 'ctf_points', true);
@@ -196,4 +200,19 @@ function hackdome_submit_flag($request) {
             'message' => 'Incorrect flag. Try again.',
         ), 200);
     }
+
+    
+    $all_ctfs = get_posts(array(
+        'post_type' => 'ctf_challenge',
+        'numberposts' => -1,
+        'post_status' => 'publish'
+    ));
+
+    foreach ($all_ctfs as $ctf) {
+        $correct_flag = get_field('challenge_flag', $ctf->ID);
+        if ($flag === $correct_flag) {
+            // success logic
+        }
+    }
+
 }
