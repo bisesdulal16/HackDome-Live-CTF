@@ -29,8 +29,12 @@ HackDome-Theme/
 │── functions.php         # Theme functions & integrations
 │── style.css             # Main CSS file
 │── index.php             # Main Theme Index
-│── single-challenge.php  # Single challenge page
-│── leaderboard.php       # Custom leaderboard template
+│── page-challenges.php   # challenge page
+│── page-leaderboard.php  # Custom leaderboard template
+│── page-login.php        # Login page template
+│── page-register.php     # Signup page template
+│── page-payment.php      # Payment page template
+│── page-profile.php      # Profile page template
 │── README.md             # Documentation
 ```
 
