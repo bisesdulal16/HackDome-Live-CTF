@@ -178,41 +178,64 @@ add_action('rest_api_init', function () {
 
 function hackdome_submit_flag($request) {
     $flag = sanitize_text_field($request->get_param('flag'));
+    $challenge_id = absint($request->get_param('challenge_id'));
     $user_id = get_current_user_id();
 
-    $correct_flag = get_post_meta($challenge_id, 'challenge_flag', true);
-    if ($flag === $correct_flag) {
-    // award points
+    $correct_flag = get_field('challenge_flag', $challenge_id);
+    if (!$correct_flag) {
+        return new WP_REST_Response(['success' => false, 'message' => 'Challenge flag not set.'], 400);
     }
 
-
-    if (in_array($flag, $correct_flags)) {
+    if ($flag === $correct_flag) {
         $current_score = (int) get_user_meta($user_id, 'ctf_points', true);
         update_user_meta($user_id, 'ctf_points', $current_score + 100);
 
-        return new WP_REST_Response(array(
-            'success' => true,
-            'message' => 'Correct flag! 100 points awarded.',
-        ), 200);
+        return new WP_REST_Response(['success' => true, 'message' => '✅ Correct flag! 100 points awarded.'], 200);
     } else {
-        return new WP_REST_Response(array(
-            'success' => false,
-            'message' => 'Incorrect flag. Try again.',
-        ), 200);
+        return new WP_REST_Response(['success' => false, 'message' => '❌ Incorrect flag. Try again.'], 200);
     }
+}
 
-    
-    $all_ctfs = get_posts(array(
-        'post_type' => 'ctf_challenge',
-        'numberposts' => -1,
-        'post_status' => 'publish'
-    ));
+function hackdome_restrict_premium_pages() {
+    if ( is_page(['challenges', 'leaderboard', 'profile']) ) {
+        if ( is_user_logged_in() ) {
+            $user_id = get_current_user_id();
+            $payment_status = get_user_meta($user_id, 'hackdome_payment_status', true);
 
-    foreach ($all_ctfs as $ctf) {
-        $correct_flag = get_field('challenge_flag', $ctf->ID);
-        if ($flag === $correct_flag) {
-            // success logic
+            if ($payment_status !== 'completed') {
+                wp_redirect(home_url('/payment'));
+                exit;
+            }
+        } else {
+            wp_redirect(home_url('/login'));
+            exit;
         }
     }
+}
+add_action('template_redirect', 'hackdome_restrict_premium_pages');
 
+
+add_action('wp_ajax_increment_players_count', 'hackdome_increment_players_count');
+add_action('wp_ajax_nopriv_increment_players_count', 'hackdome_increment_players_count');
+
+function hackdome_increment_players_count() {
+    $post_id = intval($_POST['post_id']);
+
+    if ($post_id && get_post_type($post_id) === 'ctf_challenge') {
+        $current_count = (int) get_field('players_count', $post_id);
+        update_field('players_count', $current_count + 1, $post_id);
+        wp_send_json_success(['new_count' => $current_count + 1]);
+    } else {
+        wp_send_json_error('Invalid challenge ID');
+    }
+
+    wp_die();
+}
+
+function hackdome_mark_ctf_completed($user_id, $challenge_id) {
+    $completed = get_user_meta($user_id, 'completed_ctfs', true) ?: [];
+    if (!in_array($challenge_id, $completed)) {
+        $completed[] = $challenge_id;
+        update_user_meta($user_id, 'completed_ctfs', $completed);
+    }
 }
