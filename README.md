@@ -22,6 +22,8 @@ HackDome is a **cybersecurity-focused** WordPress theme designed for **CTF (Capt
 The **HackDome Theme** is structured as follows:  
 ```
 HackDome-Theme/
+│── Project Presentation/ # Class Presentation
+│── Reports/              # Vulnerabilities Reports
 │── assets/               # Theme assets (CSS, JS, Images)
 │── templates/            # Custom PHP templates
 │── functions.php         # Theme functions & integrations
