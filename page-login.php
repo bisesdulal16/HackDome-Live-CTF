@@ -3,6 +3,8 @@
 get_header();
 ?>
 
+
+
 <!-- MATRIX RAIN BACKGROUND -->
 <canvas id="matrixRain"></canvas>
 
@@ -31,24 +33,38 @@ get_header();
                 <input type="text" name="log" id="log" placeholder="Enter Username" required>
 
                 <label for="pwd">Password</label>
-                <div class="password-container" style="position: relative;">
-                    <input type="password" name="pwd" id="pwd" placeholder="Enter Password" required>
-                    <span id="togglePassword" class="show-password" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer; color: #ec6090;">🙈</span>
-                </div>
+                    <div class="password-container">
+                        <input type="password" name="pwd" id="pwd" placeholder="Enter Password" required>
+                        <span id="togglePassword" class="show-password">🙈</span>
+                    </div>
 
                 <label>
                     <input type="checkbox" name="rememberme" value="forever"> Remember Me
                 </label>
-
+                <div class="g-recaptcha" data-sitekey="6Lca9yArAAAAACp26jolLMHFyTFzu-1y2K1NVcoD"></div><br>
                 <button type="submit" name="wp-submit" class="main-button-login">Login</button>
             
                 <p class="forgot-password"><a href="<?php echo site_url('/forgot-password'); ?>">Forgot Password?</a></p> 
             </form>
+
             <?php
         }
 
         // Handle login
         if (isset($_POST['log']) && isset($_POST['pwd'])) {
+            // ✅ Add reCAPTCHA validation here
+            $recaptcha_response = $_POST['g-recaptcha-response'];
+            $secret_key = '6Lca9yArAAAAAE5I9zbiJJGoVZNDd8lCkQhC8P2z';
+
+            $response = wp_remote_get("https://www.google.com/recaptcha/api/siteverify?secret=$secret_key&response=$recaptcha_response");
+            $response_body = wp_remote_retrieve_body($response);
+            $result = json_decode($response_body);
+
+            if (!$result->success) {
+                echo '<p class="terminal-text error">❌ CAPTCHA failed. Please try again.</p>';
+                return;
+            }
+
             $creds = array(
                 'user_login'    => sanitize_user($_POST['log']),
                 'user_password' => $_POST['pwd'],
@@ -175,5 +191,7 @@ get_header();
         });
     });
 </script>
-
+<script src="<?php echo get_template_directory_uri(); ?>/vendor/jquery/jquery.min.js"></script>
+<script src="<?php echo get_template_directory_uri(); ?>/vendor/bootstrap/js/bootstrap.min.js"></script>
+<script src="<?php echo get_template_directory_uri(); ?>/assets/js/matrix-rain.js"></script>
 <?php get_footer(); ?>
