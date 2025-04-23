@@ -30,8 +30,10 @@ get_header();
                                 );
                                 $featured_query = new WP_Query($featured_args);
                                 if ($featured_query->have_posts()) :
+                                    $completed_ctfs = get_user_meta(get_current_user_id(), 'completed_ctfs', true) ?: [];
                                     while ($featured_query->have_posts()) : $featured_query->the_post();
-                                        $desc = get_the_excerpt();
+                                        $desc       = get_the_excerpt();
+                                        $is_completed = in_array(get_the_ID(), $completed_ctfs);
                                         $players    = get_field('players_count') ?: 'N/A';
                                         $difficulty = get_field('difficulty') ?: 'Unknown';
                                         $rating     = get_field('rating') ?: '0';
@@ -45,6 +47,10 @@ get_header();
                                                     echo '<img src="' . get_template_directory_uri() . '/assets/images/default-box.jpg" alt="CTF Image">';
                                                 }
                                                 ?>
+                                                <?php if (in_array(get_the_ID(), $completed_ctfs)) : ?>
+                                                    <div class="badge-completed">🏁 Completed</div>
+                                                <?php endif; ?>
+
                                                 <div class="hover-effect">
                                                     <h6><a href="<?php the_permalink(); ?>">Join Box</a></h6>
                                                 </div>
@@ -53,8 +59,7 @@ get_header();
                                             <span class="stats">
                                                 <i class="fa fa-users"></i> Players: <?php echo esc_html($players); ?> <br>
                                                 <i class="fa fa-tachometer-alt"></i> Difficulty: <?php echo esc_html($difficulty); ?> <br>
-                                                <i class="fa fa-star"></i> <?php echo esc_html($rating); ?> <br>
-                                                <i class="fa fa-gamepad"></i> <?php echo esc_html($plays); ?> Times
+                                                <i class="fa fa-star"></i> <?php echo esc_html($rating); ?>
                                             </span>
                                         </div>
                                 <?php
@@ -68,8 +73,6 @@ get_header();
                         </div>
                     </div>
 
-
-
                     <!-- ***** CTF Leaderboard ***** -->
                     <div class="col-lg-4">
                         <div class="top-streamers">
@@ -78,7 +81,6 @@ get_header();
                             </div>
                             <ul>
                                 <?php
-                                // Dummy leaderboard data
                                 $leaderboard = [
                                     ['rank' => '01', 'name' => 'BishopX', 'score' => '2250', 'color' => 'gold'],
                                     ['rank' => '02', 'name' => 'ShadowRoot', 'score' => '1980', 'color' => 'silver'],
@@ -138,15 +140,20 @@ get_header();
                                 )
                             );
                             $ongoing = new WP_Query($args);
+                            $user_id = get_current_user_id();
+                            $completed_ctfs = get_user_meta($user_id, 'completed_ctfs', true) ?: [];
+
                             if ($ongoing->have_posts()) :
+                                $completed_ctfs = get_user_meta(get_current_user_id(), 'completed_ctfs', true) ?: [];
                                 while ($ongoing->have_posts()) : $ongoing->the_post();
-                                    $desc = get_the_excerpt(); 
+                                    $desc       = get_the_excerpt();
+                                    $is_completed = in_array(get_the_ID(), $completed_ctfs); 
                                     $players    = get_field('players_count') ?: 'N/A';
                                     $difficulty = get_field('difficulty') ?: 'Unknown';
                                     $rating     = get_field('rating') ?: '0';
                                     $category   = strtolower(get_field('category')) ?: 'general'; 
                             ?>
-                                <div class="col-lg-3 col-sm-6 ctf-item" data-category="<?php echo esc_attr($category); ?>">
+                                <div class="col-lg-3 col-sm-6 ctf-item" data-category="<?php echo esc_attr($category); ?>" data-post-id="<?php the_ID(); ?>">
                                     <div class="item">
                                         <div class="thumb">
                                             <?php 
@@ -156,16 +163,21 @@ get_header();
                                                 echo '<img src="' . get_template_directory_uri() . '/assets/images/default-box.jpg" alt="CTF">';
                                             }
                                             ?>
+                                            <?php if (in_array(get_the_ID(), $completed_ctfs)) : ?>
+                                                <div class="badge-completed">🏁 Completed</div>
+                                            <?php endif; ?>
+
+
                                             <div class="hover-effect">
                                                 <div class="content">
                                                     <div class="live"><a href="#">Live</a></div>
                                                     <ul>
-                                                        <li><a href="<?php the_permalink(); ?>"><i class="fa-solid fa-right-to-bracket"></i> Join Box </a></li>
+                                                        <li><a href="<?php the_permalink(); ?>"><i class="fa-solid fa-right-to-bracket"></i> Join Box</a></li>
                                                     </ul>
                                                 </div>
                                             </div>
                                         </div>
-                                        <h4><?php the_title(); ?><br><span><?php echo get_the_excerpt() ?: 'No description available.'; ?></span></h4>
+                                        <h4><?php the_title(); ?><br><span><?php echo $desc ?: 'No description available.'; ?></span></h4>
                                         <div class="stats">
                                             <li>
                                                 <i class="fa fa-users"></i> Players: <?php echo esc_html($players); ?> <br>
@@ -213,6 +225,23 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 });
+
+document.querySelectorAll('.launch-button').forEach(button => {
+    button.addEventListener('click', function () {
+        const postId = this.closest('.ctf-item')?.getAttribute('data-post-id');
+        if (!postId) return;
+
+        fetch(hackdome_ajax.ajax_url, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            body: new URLSearchParams({
+                action: 'increment_players_count',
+                post_id: postId
+            })
+        });
+    });
+});
+
 </script>
 
 <?php get_footer(); ?>
