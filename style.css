@@ -212,227 +212,280 @@ Text Domain: hackdome
     font-size: 1.2rem;
 }
 
-/* MFA Form Styling */
-.mfa-form input {
-    width: 100%;
-    padding: 10px;
-    margin-top: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
 
-.mfa-form button {
-    width: 100%;
-    margin-top: 10px;
-    background-color: #e75e8d;
-    border: none;
-    padding: 10px;
-    border-radius: 5px;
-    color: #fff;
-    cursor: pointer;
-}
-
-.mfa-form button:hover {
-    background-color: #d14f7c;
-}
-
-.cart-buttons {
-    margin-top: 20px;
-    text-align: center;
-}
-
-.cart-buttons a {
-    margin: 0 10px;
-}
 
 /* ============================= */
-/* miniOrange 2FA Popup Styling  */
+/* HackDome Payment Section      */
 /* ============================= */
 
-/* Popup Container */
-#mo2f_modal, .mo2f-popup, .mo2f-modal-content {
-    background-color: #0b0f19 !important; /* Dark Background */
-    border-radius: 10px !important;
-    border: 2px solid #ec6090 !important; /* Glowing Pink Border */
-    color: #fff !important;
-    box-shadow: 0 0 20px rgba(236, 96, 144, 0.5);
-    width: 400px !important;
-    max-width: 90%;
-    padding: 20px;
-}
-
-/* Popup Header */
-.mo2f-modal-header {
-    background-color: #1e242c !important;
-    border-bottom: 2px solid #ec6090;
-    text-align: center;
+.payment-section {
+    margin: 80px auto !important;
+    padding: 30px 25px !important;
+    max-width: 520px !important;
+    background-color: rgba(15, 15, 20, 0.95) !important;
+    border: 2px solid #ec6090 !important;
+    border-radius: 12px !important;
+    text-align: center !important;
+    box-shadow: 0 0 25px rgba(236, 96, 144, 0.4) !important;
+    font-family: 'Courier New', monospace !important;
+    z-index: 1;
+    position: relative;
+  }
+  
+  .payment-section h3 {
     color: #ec6090 !important;
-    font-size: 1.5rem;
-    padding: 15px;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-}
-
-/* Close Button */
-.mo2f-close {
-    color: #fff !important;
-    font-size: 1.4rem;
-    right: 10px;
-    top: 5px;
-    cursor: pointer;
-}
-
-.mo2f-close:hover {
-    color: #ec6090 !important;
-}
-
-/* QR Code Styling */
-.mo2f-qr-code img {
-    border: 2px solid #ec6090;
-    border-radius: 5px;
-    padding: 5px;
-    display: block;
-    margin: 10px auto;
-}
-
-/* Input Fields */
-.mo2f-input, .mo2f-otp-field input[type="text"] {
-    width: 100% !important;
+    margin-bottom: 20px !important;
+    font-size: 1.6rem !important;
+    font-weight: 700 !important;
+    background: #ec6090 !important;
+    color: #000 !important;
     padding: 10px;
-    border-radius: 5px;
-    background-color: #1e242c !important;
-    border: 1px solid #444 !important;
-    color: #fff !important;
-    margin: 10px 0;
-}
-
-/* Focus Effect */
-.mo2f-input:focus, .mo2f-otp-field input[type="text"]:focus {
-    border-color: #ec6090 !important;
-    box-shadow: 0 0 5px rgba(236, 96, 144, 0.7);
-    outline: none;
-}
-
-/* Submit Button */
-.mo2f-submit-btn, .mo2f-verify-btn {
+    border-radius: 8px;
+  }
+  
+  /* Message or note text */
+  .payment-section p {
+    font-size: 0.95rem !important;
+    color: #f8c1d1 !important;
+    line-height: 1.6 !important;
+    margin-bottom: 25px !important;
+  }
+  
+  /* Stripe Button & Custom Button */
+  .payment-section button,
+  .payment-section .stripe-button-el,
+  .custom-stripe-button input[type="submit"] {
     background-color: #ec6090 !important;
-    border: none;
     color: #fff !important;
-    padding: 12px;
-    border-radius: 5px;
-    width: 100%;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.mo2f-submit-btn:hover, .mo2f-verify-btn:hover {
+    border: none !important;
+    padding: 14px 30px !important;
+    font-size: 1rem !important;
+    font-weight: bold !important;
+    border-radius: 8px !important;
+    font-family: 'Courier New', monospace !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease-in-out !important;
+    width: 100% !important;
+    max-width: 300px !important;
+    margin: 0 auto;
+    display: inline-block;
+  }
+  
+  .payment-section .stripe-button-el:hover,
+  .custom-stripe-button input[type="submit"]:hover {
     background-color: #d14b77 !important;
-}
-
-/* Error & Success Messages */
-.mo2f-error, .mo2f-success {
-    padding: 12px;
-    border-radius: 5px;
-    margin-top: 10px;
-    text-align: center;
-    font-weight: bold;
-}
-
-.mo2f-error {
-    background-color: #dc3545 !important;
+    box-shadow: 0 0 12px rgba(236, 96, 144, 0.5) !important;
+  }
+  
+  /* Stripe Input Fields */
+  .wpsp-stripe-checkout-form input[type="text"],
+  .wpsp-stripe-checkout-form input[type="email"],
+  .wpsp-stripe-checkout-form input[type="tel"] {
+    background-color: #1e242c !important;
     color: #fff !important;
-}
-
-.mo2f-success {
+    border: 1px solid #444 !important;
+    border-radius: 5px !important;
+    padding: 12px !important;
+    margin: 10px 0 !important;
+    width: 100% !important;
+    font-size: 0.95rem !important;
+  }
+  
+  .wpsp-stripe-checkout-form label {
+    color: #fff !important;
+    font-weight: 600 !important;
+    font-size: 0.9rem !important;
+    display: block;
+    text-align: left;
+    margin-bottom: 6px;
+  }
+  
+  /* Success/Error Feedback */
+  .payment-success .terminal-text.success,
+  .payment-error .terminal-text.error {
+    padding: 12px !important;
+    border-radius: 6px !important;
+    margin-top: 15px !important;
+    font-weight: 600 !important;
+    text-align: center;
+    font-size: 0.9rem !important;
+  }
+  
+  .payment-success .terminal-text.success {
     background-color: #28a745 !important;
     color: #fff !important;
-}
-
-/* Responsive Popup */
-@media (max-width: 768px) {
-    #mo2f_modal, .mo2f-popup {
-        width: 90% !important;
+  }
+  
+  .payment-error .terminal-text.error {
+    background-color: #dc3545 !important;
+    color: #fff !important;
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .payment-section {
+      padding: 25px 15px !important;
+      margin: 40px auto !important;
     }
-}
+  
+    .payment-section h3 {
+      font-size: 1.4rem !important;
+    }
+  
+    .payment-section button,
+    .payment-section .stripe-button-el {
+      width: 100% !important;
+      font-size: 1rem !important;
+    }
+  }
+  
+  /* ====== 2FA Login Field ====== */
+  .terminal-body input[type="text"],
+  .terminal-body input[type="password"] {
+      width: 100% !important;
+      padding: 12px !important;
+      border-radius: 5px !important;
+      border: 1px solid #e75e8d !important;
+      background-color: #1f1f1f !important;
+      color: #fff !important;
+      margin-bottom: 15px !important;
+      z-index: 9999 !important;
+      position: relative !important;
+  }
+  
+  .terminal-body input[type="text"]:focus,
+  .terminal-body input[type="password"]:focus {
+      border-color: #ec6090 !important;
+      box-shadow: 0 0 5px rgba(236, 96, 144, 0.5) !important;
+      outline: none !important;
+  }
+  
+  /* ====== 2FA Success & Error Messages ====== */
+  .terminal-text.success,
+  .terminal-text.error {
+      font-weight: bold !important;
+      padding: 10px !important;
+      border-radius: 5px !important;
+      z-index: 9999 !important;
+      position: relative !important;
+  }
+  
+  .terminal-text.success {
+      color: #28a745 !important;
+      background-color: rgba(40, 167, 69, 0.1) !important;
+  }
+  
+  .terminal-text.error {
+      color: #dc3545 !important;
+      background-color: rgba(220, 53, 69, 0.1) !important;
+  }
+  
+  .password-container {
+      position: relative !important;
+      z-index: 9999 !important;
+  }
+  
+  .show-password {
+      position: absolute !important;
+      right: 10px !important;
+      top: 50% !important;
+      transform: translateY(-50%) !important;
+      cursor: pointer !important;
+      color: #e75e8d !important;
+      font-size: 1.2rem !important;
+  }
+  
 
-/* =============================== */
-/* Stripe Payment Form - Custom UI */
-/* =============================== */
-
-/* Payment Section Container */
-.payment-section {
-    text-align: center;
-    margin: 20px auto;
-}
-
-/* Stripe Payment Button */
-.custom-stripe-button input[type="submit"] {
-    background-color: #ec6090; /* Pink theme color */
-    border: none;
+/*For payment summary in payment page*/
+.subscription-summary {
+    background-color: rgba(255, 255, 255, 0.02);
+    border: 1px solid #ec6090;
+    padding: 20px;
+    margin: 20px 0;
+    border-radius: 10px;
     color: #fff;
-    padding: 15px 25px;
-    border-radius: 5px;
+  }
+  
+  .subscription-summary h4 {
+    color: #ec6090;
     font-size: 1.2rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
-    width: 100%;
-    max-width: 300px;
-}
-
-.custom-stripe-button input[type="submit"]:hover {
-    background-color: #d14b77;
-    box-shadow: 0 0 15px rgba(236, 96, 144, 0.7);
-}
-
-/* Stripe Form Fields */
-.wpsp-stripe-checkout-form input[type="text"],
-.wpsp-stripe-checkout-form input[type="email"],
-.wpsp-stripe-checkout-form input[type="tel"] {
-    width: 100%;
-    padding: 12px;
-    margin: 10px 0;
+    margin-bottom: 10px;
+  }
+  
+  .subscription-summary ul {
+    padding-left: 20px;
+    text-align: left;
+    list-style: none;
+  }
+  
+  .subscription-summary ul li {
+    margin-bottom: 6px;
+    font-size: 0.95rem;
+  }
+  
+  .launch-button {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 16px;
+    background-color: #ec6090;
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
     border-radius: 5px;
-    border: 1px solid #444;
-    background-color: #1e242c;
-    color: #fff;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    transition: background 0.3s ease;
 }
 
-.wpsp-stripe-checkout-form input:focus {
-    border-color: #ec6090;
-    box-shadow: 0 0 5px rgba(236, 96, 144, 0.5);
+.launch-button:hover {
+    background-color: #ff4ca1;
 }
 
-/* Stripe Form Labels */
-.wpsp-stripe-checkout-form label {
-    color: #fff;
-    font-weight: 600;
+
+/*For flag verification*/
+.flag-submit-form {
+    margin-top: 20px;
 }
 
-/* Payment Success Message */
-.payment-success .terminal-text.success {
-    background-color: #28a745;
-    color: #fff;
-    padding: 15px;
-    border-radius: 5px;
-    margin: 20px auto;
+.flag-submit-form input {
+    padding: 8px;
+    width: 300px;
+    margin-right: 10px;
+}
+
+.congrats-box {
+    background: #d4edda;
+    border-left: 5px solid #28a745;
+    padding: 20px;
+    margin-top: 30px;
+    border-radius: 6px;
+}
+
+.flag-success-animation {
     text-align: center;
+    color: #00ff99;
+    font-size: 18px;
+    animation: glow 1s ease-in-out infinite alternate;
+    margin-top: 15px;
 }
 
-/* Payment Failure Message */
-.payment-error .terminal-text.error {
-    background-color: #dc3545;
-    color: #fff;
-    padding: 15px;
-    border-radius: 5px;
-    margin: 20px auto;
-    text-align: center;
-}
-
-/* Responsive Payment Form */
-@media (max-width: 768px) {
-    .custom-stripe-button input[type="submit"] {
-        width: 100%;
-        font-size: 1rem;
+@keyframes glow {
+    from {
+        text-shadow: 0 0 10px #00ff99, 0 0 20px #00ff99;
+    }
+    to {
+        text-shadow: 0 0 20px #00ff99, 0 0 30px #00ff99;
     }
 }
+
+.badge-completed {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: #00ff99;
+    color: #000;
+    font-weight: bold;
+    padding: 6px 10px;
+    border-radius: 5px;
+    font-size: 13px;
+    z-index: 5;
+}
+
