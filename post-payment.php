@@ -1,4 +1,19 @@
 <?php
+// Ensure user is logged in
+if (is_user_logged_in()) {
+    $user_id = get_current_user_id();
+
+    // Check if meta already marked as paid
+    $already_paid = get_user_meta($user_id, 'hackdome_payment_status', true);
+
+    // If not already set, mark payment as completed
+    if ($already_paid !== 'completed') {
+        update_user_meta($user_id, 'hackdome_payment_status', 'completed');
+    }
+}
+?>
+
+<?php
 /* Template Name: Post Payment */
 get_header();
 ?>
