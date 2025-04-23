@@ -4,174 +4,113 @@ get_header();
 ?>
 
 <style>
-    .register-container {
-        max-width: 500px;
-        margin: 80px auto;
-        background: #1f1f1f;
-        border-radius: 10px;
-        padding: 30px;
-        box-shadow: 0 0 15px rgba(255, 0, 255, 0.2);
-        font-family: 'Poppins', sans-serif;
-        color: #fff;
-    }
-    .register-container h2 {
-        font-size: 28px;
-        margin-bottom: 10px;
-        text-align: center;
-        color: #fff;
-    }
-    .register-container p.subtext {
-        text-align: center;
-        color: #ccc;
-        font-size: 14px;
-        margin-bottom: 20px;
-    }
-    .register-container label {
-        font-weight: 500;
-        margin-top: 15px;
-        display: block;
-        color: #eee;
-    }
-    .register-container input[type="text"],
-    .register-container input[type="email"],
-    .register-container input[type="password"] {
-        width: 100%;
-        padding: 12px;
-        margin-top: 8px;
-        border: 1px solid #444;
-        border-radius: 5px;
-        background: #2b2b2b;
-        color: #fff;
-    }
-    .register-container .password-container {
-        position: relative;
-    }
-    .register-container .toggle-password {
-        position: absolute;
-        right: 10px;
-        top: 50%;
-        transform: translateY(-50%);
-        cursor: pointer;
-        color: #aaa;
-    }
-    .register-container .error {
-        color: #ff4c4c;
-        font-weight: 500;
-        margin-top: 10px;
-    }
-    .main-button-login, .google-btn, .sso-btn {
-        margin-top: 20px;
-        width: 100%;
-        padding: 12px;
-        font-weight: bold;
-        font-size: 16px;
-        border-radius: 5px;
-        cursor: pointer;
-        display: block;
-        text-align: center;
-        text-decoration: none;
-    }
-    .main-button-login {
-        background: #ff4c9b;
-        border: none;
-        color: white;
-    }
-    .google-btn {
-        background: white;
-        color: #444;
-        border: 1px solid #ccc;
-    }
-    .register-container .separator {
-        text-align: center;
-        margin: 20px 0;
-        color: #666;
-        position: relative;
-    }
-    .register-container .separator::before,
-    .register-container .separator::after {
-        content: "";
-        height: 1px;
-        width: 45%;
-        background: #333;
-        position: absolute;
-        top: 50%;
-    }
-    .register-container .separator::before {
-        left: 0;
-    }
-    .register-container .separator::after {
-        right: 0;
-    }
-    .register-container .bottom-text {
-        text-align: center;
+    .password-hint {
         font-size: 12px;
-        margin-top: 20px;
-        color: #ccc;
+        color: #888;
+        margin-top: 5px;
     }
-    .register-container .bottom-text a {
-        color: #ff4c9b;
-        text-decoration: underline;
+    .strength-text {
+        font-size: 13px;
+        margin-top: 5px;
+        font-weight: 600;
     }
+    .weak { color: #ff4c4c; }
+    .medium { color: #ffc107; }
+    .strong { color: #28a745; }
 </style>
 
-<div class="register-container">
-    <h2>Sign Up</h2>
-    <p class="subtext">Join HackDome and upskill in cybersecurity.</p>
+<canvas id="matrixRain"></canvas>
 
-    <?php if (is_user_logged_in()) : ?>
-        <p class="error">You are already logged in. <a href="<?php echo wp_logout_url(home_url()); ?>">Logout</a></p>
-    <?php else : ?>
-        <form action="<?php echo esc_url($_SERVER['REQUEST_URI']); ?>" method="post">
-            <label for="username">Username</label>
-            <input type="text" name="username" placeholder="Username" required>
+<div class="terminal-container">
+    <div class="terminal-header">
+        <span class="terminal-title">Register for HackDome</span>
+    </div>
 
-            <label for="email">Email Address</label>
-            <input type="email" name="email" placeholder="example@example.com" required>
-
-            <label for="password">Password</label>
-            <div class="password-container">
-                <input type="password" name="password" id="password" placeholder="Password" required>
-                <span class="toggle-password" onclick="togglePasswordVisibility()">
-                    <i class="fa fa-eye" id="toggleIcon"></i>
-                </span>
-            </div>
-
-            <button type="submit" name="submit_registration" class="main-button-login">Sign Up</button>
-        </form>
+    <div class="terminal-body">
+        <div class="logo-container">
+            <img src="<?php echo get_template_directory_uri(); ?>/assets/images/logo.png" alt="HackDome Logo" class="logo">
+        </div>
 
         <?php
-        if (isset($_POST['submit_registration'])) {
-            $username = sanitize_user($_POST['username']);
-            $email    = sanitize_email($_POST['email']);
-            $password = $_POST['password'];
+        $has_paid = get_user_meta(get_current_user_id(), 'hackdome_payment_status', true) === 'completed';
 
-            if (username_exists($username) || email_exists($email)) {
-                echo '<p class="error"><i class="fa fa-times-circle"></i> Username or Email already exists.</p>';
-            } else {
-                $user_id = wp_create_user($username, $password, $email);
+        if (is_user_logged_in() && $has_paid) : ?>
+            <p class="terminal-text error">You are already registered and subscribed. <a href="<?php echo esc_url(home_url('/')); ?>">Go to Homepage</a></p>
 
-                if (!is_wp_error($user_id)) {
-                    wp_set_current_user($user_id);
-                    wp_set_auth_cookie($user_id);
-                    echo '<script>window.location.href = "' . home_url('/payment') . '";</script>';
-                    exit;
+        <?php elseif (is_user_logged_in() && !$has_paid) : ?>
+            <p class="terminal-text error">You are already registered but haven’t completed payment. <a href="<?php echo esc_url(home_url('/payment')); ?>">Complete Payment</a> or <a href="<?php echo wp_logout_url(home_url('/register')); ?>">Logout</a></p>
+
+        <?php else : ?>
+            <form action="<?php echo esc_url($_SERVER['REQUEST_URI']); ?>" method="post">
+                <label for="username">Username</label>
+                <input type="text" name="username" placeholder="Username" required>
+
+                <label for="email">Email Address</label>
+                <input type="email" name="email" placeholder="example@example.com" required>
+
+                <label for="password">Password</label>
+                
+                <div class="password-container" style="position: relative;">
+                    <input type="password" name="password" id="password" placeholder="Password" required onkeyup="checkPasswordStrength()">
+                    <span id="togglePassword" class="show-password">🙈</span>
+                    <div id="password-strength-text" class="strength-text"></div>
+                </div>
+                <div class="password-hint terminal-text">Must be at least 8 characters, with a mix of letters and numbers.</div>
+
+                <label for="plan">Select a Plan</label>
+                <select name="plan" required>
+                    <option value="basic">Basic - $9.99/month</option>
+                    <option value="pro" disabled>Pro - Coming Soon</option>
+                    <option value="elite" disabled>Elite - Coming Soon</option>
+                </select>
+
+                <div class="g-recaptcha" data-sitekey="6Lca9yArAAAAACp26jolLMHFyTFzu-1y2K1NVcoD"></div><br>
+                <button type="submit" name="submit_registration" class="main-button-login">Sign Up</button>
+                <p class="terminal-text">Forgot password? <a href="<?php echo esc_url(home_url('/forgot-password')); ?>">Reset here</a>.</p>
+            </form>
+
+            <?php
+            if (isset($_POST['submit_registration'])) {
+
+                $recaptcha_response = $_POST['g-recaptcha-response'];
+                $secret_key = '6Lca9yArAAAAAE5I9zbiJJGoVZNDd8lCkQhC8P2z';
+
+                $response = wp_remote_get("https://www.google.com/recaptcha/api/siteverify?secret=$secret_key&response=$recaptcha_response");
+                $response_body = wp_remote_retrieve_body($response);
+                $result = json_decode($response_body);
+
+                if (!$result->success) {
+                    echo '<p class="terminal-text error">❌ CAPTCHA failed. Please try again.</p>';
+                    return;
+                }
+
+                $username = sanitize_user($_POST['username']);
+                $email    = sanitize_email($_POST['email']);
+                $password = $_POST['password'];
+                $plan     = sanitize_text_field($_POST['plan']);
+
+                if (username_exists($username) || email_exists($email)) {
+                    echo '<p class="terminal-text error">❌ Username or Email already exists.</p>';
                 } else {
-                    echo '<p class="error"><i class="fa fa-exclamation-circle"></i> Error creating account. Please try again.</p>';
+                    $user_id = wp_create_user($username, $password, $email);
+                    if (!is_wp_error($user_id)) {
+                        wp_set_current_user($user_id);
+                        wp_set_auth_cookie($user_id);
+                        echo '<script>window.location.href = "' . home_url('/payment?plan=') . $plan . '";</script>';
+                        exit;
+                    } else {
+                        echo '<p class="terminal-text error">❌ Error creating account. Please try again.</p>';
+                    }
                 }
             }
-        }
-        ?>
+            ?>
 
-        <div class="separator">or</div>
-
-        <a href="#" class="google-btn"><i class="fab fa-google"></i> Continue with Google</a>
-    <?php endif; ?>
-
-    <div class="bottom-text">
-        By signing up, you agree to our <a href="#">Terms and Conditions</a>. Already have an account? <a href="<?php echo home_url('/login'); ?>">Log in</a>.
+            <p class="terminal-text">[+] Already have an account? <a href="<?php echo home_url('/login'); ?>">Log in here</a>.</p>
+        <?php endif; ?>
     </div>
 </div>
 
+<!-- Password Strength + Toggle -->
 <script>
     function togglePasswordVisibility() {
         const passwordField = document.getElementById('password');
@@ -187,6 +126,33 @@ get_header();
             toggleIcon.classList.add('fa-eye');
         }
     }
+
+    function checkPasswordStrength() {
+        const strengthText = document.getElementById("password-strength-text");
+        const password = document.getElementById("password").value;
+        let strength = 0;
+
+        if (password.length >= 8) strength++;
+        if (/[a-z]/.test(password)) strength++;
+        if (/[A-Z]/.test(password)) strength++;
+        if (/[0-9]/.test(password)) strength++;
+        if (/[\W]/.test(password)) strength++;
+
+        if (strength <= 2) {
+            strengthText.textContent = "Weak 🔴";
+            strengthText.style.color = "#ff4c4c";
+        } else if (strength === 3 || strength === 4) {
+            strengthText.textContent = "Moderate 🟠";
+            strengthText.style.color = "#ff9900";
+        } else {
+            strengthText.textContent = "Strong 🟢";
+            strengthText.style.color = "#00cc66";
+        }
+    }
 </script>
+
+<script src="<?php echo get_template_directory_uri(); ?>/vendor/jquery/jquery.min.js"></script>
+<script src="<?php echo get_template_directory_uri(); ?>/vendor/bootstrap/js/bootstrap.min.js"></script>
+<script src="<?php echo get_template_directory_uri(); ?>/assets/js/matrix-rain.js"></script>
 
 <?php get_footer(); ?>
