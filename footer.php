@@ -2,7 +2,7 @@
 <footer>
     <div class="container">
         <div class="footer-container">
-            
+             
             <!-- Dynamic Logo -->
             <div class="footer-logo">
                 <a href="<?php echo esc_url(home_url('/')); ?>">
