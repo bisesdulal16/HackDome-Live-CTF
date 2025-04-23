@@ -27,6 +27,18 @@ get_header();
 
         <p class="terminal-text">[+] Your account has been created. Please complete your payment to activate HackDome access.</p>
 
+        <div class="subscription-summary">
+            <h4 class="terminal-text">💳 Plan Summary: Basic Membership</h4>
+            <ul class="terminal-text">
+                <li>• Access to Live CTF Challenges</li>
+                <li>• Basic Challenge Library</li>
+                <li>• Community Support</li>
+                <li>• Monthly Renewal: <strong>$9.99</strong></li>
+                <li>• Cancel Anytime</li>
+            </ul>
+        </div>
+
+
         <!-- Stripe Payment Integration -->
         <div class="payment-section">
             <?php
@@ -40,6 +52,10 @@ get_header();
                 cancel_url="' . esc_url(home_url('/payment?status=cancel')) . '"
                 class="custom-stripe-button"]');
             ?>
+            <p class="terminal-text">
+                <a href="<?php echo esc_url(home_url('/register')); ?>" class="btn btn-outline-light mt-4">← Go Back to Register</a>
+            </p>
+
         </div>
 
     </div>
